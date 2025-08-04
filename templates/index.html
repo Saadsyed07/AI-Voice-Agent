@@ -2,26 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Voice Agent - Day 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Agent</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>🔊 Murf AI Voice Agent</h1>
-
-        <form id="tts-form">
-            <label for="text">Enter Text to Convert:</label><br>
-            <textarea id="text" name="text" rows="4" placeholder="Type something..." required></textarea><br>
-            <button type="submit">Generate Voice</button>
-        </form>
-
-        <div id="player-section" style="display:none;">
-            <h3>🎧 Listen Below:</h3>
-            <audio id="audio-player" controls></audio>
-        </div>
+    <!-- Network Background -->
+    <div class="network-bg">
+        <canvas id="network-canvas"></canvas>
     </div>
 
-    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <h1>Voice AI</h1>
+            </div>
+            <div class="status">
+                <div class="status-dot"></div>
+                <span>Online</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <h2>Text to Speech</h2>
+                <p>Convert your text into natural-sounding voice</p>
+            </div>
+
+            <form id="tts-form" class="voice-form">
+                <div class="input-group">
+                    <label for="text">Enter Text</label>
+                    <textarea 
+                        id="text" 
+                        name="text" 
+                        placeholder="Type your message here..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="generate-btn" id="generate-btn">
+                    <span class="btn-text">Generate Voice</span>
+                    <div class="btn-loader"></div>
+                </button>
+            </form>
+
+            <!-- Audio Player -->
+            <div id="player-section" class="player-section">
+                <div class="player-header">
+                    <h3>Generated Audio</h3>
+                </div>
+                <div class="audio-wrapper">
+                    <audio id="audio-player" controls></audio>
+                </div>
+            </div>
+        </main>
+    </div>
+
     <script src="/static/script.js"></script>
 </body>
 </html>

@@ -1,42 +1,323 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 40px;
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #fafbfc;
+    color: #1a1d29;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Network Background */
+.network-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 600px;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+#network-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Main Container */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+    padding: 0 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    position: relative;
+}
+
+.logo-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 2px;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a1d29;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Main Content */
+.main-content {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.04),
+        0 10px 10px -5px rgba(0, 0, 0, 0.02);
+}
+
+.content-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.content-header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1a1d29;
+    margin-bottom: 8px;
+}
+
+.content-header p {
+    font-size: 1rem;
+    color: #64748b;
+}
+
+/* Form Styles */
+.voice-form {
+    margin-bottom: 40px;
+}
+
+.input-group {
+    margin-bottom: 30px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 12px;
 }
 
 textarea {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
+    min-height: 140px;
+    padding: 20px;
+    background: #ffffff;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #1a1d29;
+    line-height: 1.6;
+    resize: vertical;
+    transition: all 0.2s ease;
 }
 
-button {
-    padding: 10px 20px;
-    background: #4f46e5;
+textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+textarea::placeholder {
+    color: #9ca3af;
+}
+
+/* Button Styles */
+.generate-btn {
+    width: 100%;
+    position: relative;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
+    transition: all 0.2s ease;
+    overflow: hidden;
 }
 
-button:hover {
-    background: #3730a3;
+.generate-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+}
+
+.generate-btn:active {
+    transform: translateY(0);
+}
+
+.generate-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.generate-btn.loading .btn-text {
+    opacity: 0;
+}
+
+.btn-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: spin 1s linear infinite;
+}
+
+.generate-btn.loading .btn-loader {
+    opacity: 1;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Player Section */
+.player-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid #e5e7eb;
+}
+
+.player-section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.player-header {
+    margin-bottom: 20px;
+}
+
+.player-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a1d29;
+}
+
+.audio-wrapper {
+    width: 100%;
 }
 
 audio {
-    margin-top: 10px;
     width: 100%;
+    height: 50px;
+    border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 15px;
+    }
+    
+    .header {
+        margin-bottom: 40px;
+    }
+    
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+    
+    .main-content {
+        padding: 30px 25px;
+    }
+    
+    .content-header h2 {
+        font-size: 1.7rem;
+    }
+    
+    textarea {
+        min-height: 120px;
+        padding: 16px;
+    }
+    
+    .generate-btn {
+        padding: 16px 20px;
+    }
+    
+    .player-section {
+        padding: 25px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .main-content {
+        padding: 25px 20px;
+    }
+    
+    .content-header h2 {
+        font-size: 1.5rem;
+    }
 }
