@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Voice Agent - Day 3</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔊 Murf AI Voice Agent</h1>
+
+        <form id="tts-form">
+            <label for="text">Enter Text to Convert:</label><br>
+            <textarea id="text" name="text" rows="4" placeholder="Type something..." required></textarea><br>
+            <button type="submit">Generate Voice</button>
+        </form>
+
+        <div id="player-section" style="display:none;">
+            <h3>🎧 Listen Below:</h3>
+            <audio id="audio-player" controls></audio>
+        </div>
+    </div>
+
+    
+    <script src="/static/script.js"></script>
+</body>
+</html>
